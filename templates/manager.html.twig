@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block manager_nav %}active{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .manager-content {
+            padding: 50px;
+        }
+        .database-upload-content {
+            padding: 1em;
+            text-align: center;
+        }
+        .lmusers-content {
+            padding: 1em;
+            text-align: center;
+        }
+        .database-upload-content table {
+            width: 100%;
+        }
+        .database-upload-filename-col {
+            text-align: left;
+            padding-left: 0.5em;
+            width: 15%;
+        }
+        .database-upload-form-col {
+            text-align: right;
+            padding-right: 0.5em;
+            width: 85%;
+        }
+        .custom-file label {
+            border: none;
+            text-align: left;
+        }
+        .custome-file input {
+            text-align: right;
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        $(function(){
+
+            function printLog(m){
+                $('.manager-log').append('<p>' + m + '</p>');
+            }
+
+            function isValidManagerForm(form) {
+                return $(form).find('input[type="checkbox"]').is(':checked');
+            }
+
+            function onManagerFormSubmitted() {
+                $('.manager-content').find('form').submit(function(e){
+                    e.preventDefault();
+
+                    if(!isValidManagerForm(this)) {
+                        alert('Must check at least one field');
+                    }else{
+                        $.ajax({
+                            method: "POST",
+                            url: "{{ path('manager_upload') }}",
+                            data: new FormData($(this)[0]),
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            success: function(data) {
+                                if(data.Athletes) {
+                                    data.Athletes.forEach(function(m){
+                                        printLog(m);
+                                    });
+                                } else if(data.Records) {
+                                    data.Records.forEach(function(m){
+                                        printLog(m);
+                                    });
+                                }
+                            }
+                        });
+                    }
+                })
+            }
+
+            $.ajax({
+                type: "GET",
+                url: "{{ path('manager_upload') }}",
+                success: function(form) {
+                    $('.manager-content').find('form').html(form);
+                    fileHandle();
+
+                    onManagerFormSubmitted();
+                }
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="manager-content">
+        <h1>Team Manager Upload</h1>
+        <form method="POST" action="{{ path('manager_upload') }}">
+        </form>
+        <div class="manager-log">
+        </div>
+    </div>
+{% endblock %}

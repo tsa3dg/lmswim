@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <style>
+        .absentees-content {
+            text-align: center;
+        }
+        .absentees-list {
+            text-align: left;
+            padding: 
+        }
+        .absentees-list table {
+            width: 75%;
+            text-align: center;
+            border: solid 1px black;
+            margin-bottom: 2em;
+        }
+        .absentees-list table th {
+            border: solid 1px black;
+        }
+        .absentees-list table td {
+            text-align: left;
+            width: 25%;
+            border: solid 1px black;
+            padding: 0.5em;
+        }
+        .absentees-list table td:nth-child(3) {
+            width: 50%;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="absentees-content">
+        <h1>Notes and Absentees</h1>
+        <div class="absentees-list p-3">
+            {% for meet in meets %}
+                <h2>{{ meet.start|date("m/d/Y") }}</h2>
+                <table>
+                    <tr>
+                        {% if not meet.absentees %}
+                            <td>No absentees!</td>
+                        {% else %}
+                            <th>Name</th>
+                            <th>Attending</th>
+                            <th>Notes</th>
+                            </tr>
+                            {% for athlete in meet.absentees %}
+                                <tr>
+                                <td>{{ athlete.first }} {{ athlete.last }}</td>
+                                <td>
+                                    {% if athlete.attending == '0' %}
+                                        No
+                                    {% else %}
+                                        Yes
+                                    {% endif %}
+                                </td>
+                                <td>{{ athlete.notes }}</td>
+                            {% endfor %}
+                        {% endif %}
+                    </tr>
+                </table>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

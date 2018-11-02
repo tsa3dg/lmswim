@@ -1,0 +1,50 @@
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: 'en'
+
+    # Code of team using mgmt software
+    team_code: 'LM'
+
+    # Location of client executable program
+    client_executable: '../bin/lmclient'
+
+    # Location of staging folder for TM Databases
+    tm_database_path: '../TMData/'
+
+    # Meet document folders in public directory
+    meet_results_path: 'results/'
+    meet_program_path: 'programs/'
+    meet_timeline_path: 'timelines/'
+    meet_scores_path: 'scores/'
+
+    # Start / End times of meets
+    meet_start_time: '7:00'
+    meet_end_time: '11:30'
+    meet_divisonals_end_time: '12:30'
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: false       # Allows optimizing the container by removing unused services; this also means
+                            # fetching services directly from the container via $container->get() won't work.
+                            # The best practice is to be explicit about your dependencies anyway.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{Entity,Migrations,Tests,Kernel.php}'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+    App\Service\ClientHandler:
+        $client_executable: '%client_executable%'

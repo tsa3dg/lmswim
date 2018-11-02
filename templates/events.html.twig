@@ -1,0 +1,584 @@
+{% extends 'base.html.twig' %}
+
+{% block events_nav %}active{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .events-content {
+            text-align: center;
+        }
+        .calendar {
+            text-align: center;
+            margin: auto;
+        }
+        .calendar, .calendar tr, .calendar td, .calendar th {
+            border: 1px solid black;
+        }
+        .calendar td {
+            height: 100px;
+            width: 100px;
+            max-width: 100px;
+            text-align: right;
+            vertical-align: top;
+        }
+        .calendar td .dayofmonth {
+            padding: 10px;
+
+        }
+        .calendar td a {
+            float: left;
+        }
+        .calendar-btn-group {
+            padding: 1em;
+        }
+        .calendar-btn-group button {
+            margin-left: 1em;
+            margin-right: 1em;
+            border-radius: 4px!important;
+            width: 100px;
+        }
+        .event-popover {
+            padding: 0.25em 0.5em;
+            font-size: 10px;
+            width: 100%;
+            white-space: nowrap; 
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: white!important;
+        }
+        .popover-header {
+            width: 100%;
+        }
+        .popover-header .edit-icon-div {
+            display: inline-block;
+            width: 15%;
+        }
+        .popover-header .event-popover-div {
+            display: inline-block;
+            width: 85%;
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+
+        function lpad(num) {
+            if(num < 10) {
+                return '0' + num;
+            }
+            return num;
+        }
+
+        function getDaysSinceNewYears(year) {
+            if(year % 4 == 0 && (year % 4 == 400 || year % 4 != 100)) {
+                return daysSinceNewYears = [0,31,60,91,121,152,182,213,244,274,305,335,366];
+            }else{
+                return daysSinceNewYears = [0,31,59,90,120,151,181,212,243,273,304,334,365];
+            }
+        }
+
+        function convertTimeToString(date) {
+            var hours = date.getHours();
+            var minutes = date.getMinutes();
+            if(hours < 12) {
+                return hours + ':' + lpad(minutes) + ' AM';
+            } else if (hours == 12){
+                return '12: ' + minutes + ' PM'; 
+            } else {
+                return hours % 12 + ':' + lpad(minutes) + ' PM';
+            }
+        }
+
+        function R(y,m) {
+            return y % m;    
+        }
+
+        function getNextDay(year, month, day) {
+            var daysSinceNewYears = getDaysSinceNewYears(year);
+            var daysInMonth = daysSinceNewYears[month] - daysSinceNewYears[month-1];
+            if(month == 12 && day == 31) {
+                return {year: year + 1, month: 1, day: 1};
+            } else if(day >= daysInMonth) {
+                return {year: year, month: month + 1, day: 1};
+            } else {
+                return {year: year, month: month, day: day + 1};
+            }
+        }
+
+        function getNextWeek(year, month, day) {
+            var daysSinceNewYears = getDaysSinceNewYears(year);
+            var daysInMonth = daysSinceNewYears[month] - daysSinceNewYears[month-1];
+
+            if(month == 12 && day >= 25) {
+                return {year: year + 1, month: 1, day: R(day + 7, 7)};
+            } else if (day > daysInMonth - 7) {
+                return {year: year, month: month + 1, day: R(day + 7, 7)};
+            } else {
+                return {year: year, month: month, day: day + 7};
+            }
+        }
+
+        function getNextMonth(year, month, day) {
+            var daysSinceNewYears = getDaysSinceNewYears(year);
+            var daysInMonth = daysSinceNewYears[month] - daysSinceNewYears[month-1];
+
+            var i = month;
+            var yr = year;
+            do {
+                i++;
+                if(i > 12) {
+                    i = 1;
+                    yr++;
+                }
+            } while((daysSinceNewYears[i] - daysSinceNewYears[i-1]) < day);
+
+            return {year: yr, month: i, day: day};
+        }
+
+        function getNextYear(year, month, day) {
+            var daysSinceNewYears = getDaysSinceNewYears(year+1);
+            var daysInMonth = daysSinceNewYears[month] - daysSinceNewYears[month-1];
+
+            if(day > daysInMonth) {
+                return {year: year+1, month: month, day: daysInMonth};
+            } else {
+                return {year: year+1, month: month, day: day};
+            }
+        }
+
+        function isValidDate(year, month, day) {
+            var daysSinceNewYears = getDaysSinceNewYears(year);
+            if(year > 0 && month >= 1 && month <= 12) {
+                var daysInMonth = daysSinceNewYears[month] - daysSinceNewYears[month-1];
+                return (day >= 1) && (day <= daysInMonth);
+            }
+            return false;
+        }
+
+        function checkRepeatDate(year, startYear, month, startMonth, day, startDay, type) {
+
+            if(!isValidDate(year, month, day)) {
+                return false;
+            }
+
+            startDate = new Date(startYear, startMonth, startDay);
+            date = new Date(year, month, day);
+            if(type == "1") {
+                return startDate < date;
+            } else if(type == "2") {
+                var diff = date - startDate;
+                return (diff > 0 && Number.isInteger(diff/604800000));
+            } else if(type == "3") {
+                return (day == startDay) && ((month > startMonth && year == startYear) || (year > startYear));
+            } else if(type == "4") {
+                var daysSinceNewYearsFromYear = getDaysSinceNewYears(year);
+                var daysSinceNewYearsFromStartYear = getDaysSinceNewYears(startYear);
+                
+                var daysDiff = (daysSinceNewYearsFromYear[month] - 
+                    daysSinceNewYearsFromStartYear[month-1]) - 
+                    (daysSinceNewYearsFromStartYear[startMonth] - 
+                    daysSinceNewYearsFromStartYear[startMonth-1]);
+                if(daysDiff < 0) {
+                    return (day == startDay - daysDiff) && (month == startMonth) && (startYear < year);
+                } else {
+                    return (day == startDay) && (month == startMonth) && (startYear < year);
+                }
+            }
+            return true;
+        }
+
+        var setStartDateFirstMinute = function() {
+            $('#edit-event-form').find('#form_start_time_hour').val('0');
+            $('#edit-event-form').find('#form_start_time_minute').val('0');
+        };
+
+        var setEndDateLastMinute = function() {
+            $('#edit-event-form').find('#form_end_time_hour').val('23');
+            $('#edit-event-form').find('#form_end_time_minute').val('59');
+        };
+
+        var allDayClicked = function() {
+            if($('#edit-event-form').find('#form_allDay').is(':checked')) {
+                setStartDateFirstMinute();
+                setEndDateLastMinute();
+                $('#edit-event-form').find('#form_start_date_day').readonly();
+                $('#edit-event-form').find('#form_start_date_month').readonly();
+                $('#edit-event-form').find('#form_start_date_year').readonly();
+                $('#edit-event-form').find('#form_start_time_hour').readonly();
+                $('#edit-event-form').find('#form_start_time_minute').readonly();
+                $('#edit-event-form').find('#form_end_date_day').readonly();
+                $('#edit-event-form').find('#form_end_date_month').readonly();
+                $('#edit-event-form').find('#form_end_date_year').readonly();
+                $('#edit-event-form').find('#form_end_time_hour').readonly();
+                $('#edit-event-form').find('#form_end_time_minute').readonly();
+                $('#edit-event-form').find('#form_hasEnd').disable();
+
+            }else {
+                $('#edit-event-form').find('#form_start_date_day').removereadonly();
+                $('#edit-event-form').find('#form_start_date_month').removereadonly();
+                $('#edit-event-form').find('#form_start_date_year').removereadonly();
+                $('#edit-event-form').find('#form_start_time_hour').removereadonly();
+                $('#edit-event-form').find('#form_start_time_minute').removereadonly();
+                $('#edit-event-form').find('#form_end_date_day').removereadonly();
+                $('#edit-event-form').find('#form_end_date_month').removereadonly();
+                $('#edit-event-form').find('#form_end_date_year').removereadonly();
+                $('#edit-event-form').find('#form_end_time_hour').removereadonly();
+                $('#edit-event-form').find('#form_end_time_minute').removereadonly();
+                $('#edit-event-form').find('#form_hasEnd').enable();
+            }
+        };
+
+        $(function(){
+
+            specifiedDate = new Date();
+
+            $('.calendar-btn-group').find('.previous-btn').click(function(){
+                specifiedDate.setMonth(specifiedDate.getMonth() - 1);
+                displayCalendar(specifiedDate);
+            });
+
+            $('.calendar-btn-group').find('.next-btn').click(function(){
+                specifiedDate.setMonth(specifiedDate.getMonth() + 1);
+                displayCalendar(specifiedDate);
+            });
+
+            $('.calendar-btn-group').find('.today-btn').click(function(){
+                specifiedDate = new Date();
+                displayCalendar(specifiedDate);
+            });
+
+            function displayCalendar(theDate) {
+                $('#display-date').text(specifiedDate.toLocaleDateString("en-US", {year: 'numeric', month: 'long'}));
+
+                var year = theDate.getFullYear();
+                var month = theDate.getMonth() + 1;
+
+                var events;
+                $.ajax({
+                    type: 'GET',
+                    url: "{{ path('get_events_by_year_and_month_noid') }}" + '/' + year + 
+                        '/' + month,
+                    success: function(data) {
+                        addEventsToCalendar(data.events);
+                        addIconClickEvents();
+                        onPopoverClicked();
+                    }
+                });
+
+                var addEventPopover = function(event) {
+                    var popover = '';
+                    if(event) {
+                        for(var i=0; i < event.length; i++) {
+                            var start = new Date(event[i].start.date);
+                            if(event[i].end) {
+                                var end = new Date(event[i].end.date);
+                            }
+                            popover += '<a type="link" class="btn btn-secondary event-popover" data-toggle="popover" ' +
+                                'data-html="true" title="' + 
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    '<div class=' + "'edit-icon-div'" + 'id=' + "'event-" + event[i].id + 
+                                    "'><a class='edit-icon' href='#'><img src='" + 
+                                    '{{ asset("build/images/edit_icon.png") }}' + "' /></a></div>" + 
+                                {% endif %}
+                                '<div class=' + "'event-popover-div'><strong>" + event[i].title + '</strong></div>" ' + 'data-content="' + '<table><tr><td><strong>Location: </strong></td><td>' +
+                                event[i].location + '</td></tr><tr><td><strong>Time: </strong></td><td>' + 
+                                (end ? convertTimeToString(start) + ' to ' + convertTimeToString(end): 'ALL DAY') + 
+                                '</td></tr><tr><td><strong>Desc: </strong></td><td>' + (event[i].desc || 'N/A') + 
+                                '</td></tr></table>">' + event[i].title + '</a>';
+                        }
+                    }
+                    return popover;
+                };
+
+                var addEventsToCalendar = function(events) {
+                    $('.calendar').find('tr:not(:first)').remove();
+
+                    var daysSinceNewYears = getDaysSinceNewYears(year);
+                    var dayOfWeekOfFirstOfMonth = getDayOfWeek(year,1,month);
+                    var daysInMonth = daysSinceNewYears[month] - daysSinceNewYears[month-1];
+                    var currentDay = 1;
+                    for(var i = currentDay; i <= daysInMonth; i = j) {
+                        var j = i;
+                        var newRow = '<tr>';
+                        if(i == 1) {
+                            for(var k = 0; k < dayOfWeekOfFirstOfMonth; k++) {
+                                newRow += '<td tabindex="0"></td>';
+                            }
+                            for(; j <= 7 - dayOfWeekOfFirstOfMonth; j++) {
+                                newRow += '<td tabindex="0" id="' + year + '-' + lpad(month) + '-' + lpad(j) + '">' +
+                                            {% if is_granted('ROLE_ADMIN') %}
+                                                '<a class="plus-icon" href="#"><img src="' + '{{ asset("build/images/plus_icon.png") }}' + 
+                                                '" /></a>' + 
+                                            {% endif %}
+                                            '<span class="dayofmonth">' + j + '</span>';
+                                newRow += addEventPopover(events[j]);
+                                newRow += '</td>';
+                            }
+                        } else {
+                            for(; j <= i + 6; j++) {
+                                if(j > daysInMonth) {
+                                    newRow += '<td tabindex="0"></td>';
+                                }else {
+                                    newRow += '<td tabindex="0" id="' + year + '-' + lpad(month) + '-' + lpad(j) + '">' +
+                                        {% if is_granted('ROLE_ADMIN') %}
+                                            '<a class="plus-icon" href="#"><img src="' + '{{ asset("build/images/plus_icon.png") }}' + 
+                                            '" /></a>' + 
+                                        {% endif %}
+                                        '<span class="dayofmonth">' + j + '</span>';
+                                }
+                                newRow += addEventPopover(events[j]);
+                                newRow += '</td>';
+                            }
+                        }
+                        newRow += '</tr>';
+                        $('.calendar tr:last').after(newRow);
+                    }
+                    $('.event-popover').popover();
+                };
+            }
+
+            function getDayOfWeek(year, day, month) {
+                var daysSinceNewYears = getDaysSinceNewYears(year);
+                var dayOfWeekOfJanFirst = R(1 + 5*R(year-1,4) + 4*R(year-1,100) + 6*R(year-1,400),7);
+
+                return R(daysSinceNewYears[month-1] + dayOfWeekOfJanFirst, 7);
+            }
+
+            displayCalendar(specifiedDate);
+
+            var onEventFormLoad = function(d){
+                
+                function editFormSubmitted() {
+                    $('#edit-event-form').find('form').submit(function(e){
+                        e.preventDefault();
+
+                        // Validate repeat date
+                        var val = $('#edit-event-form').find('#form_repeat').val();
+
+                        var year = Number($(start_year).val());
+                        var month = Number($(start_month).val());
+                        var day = Number($(start_day).val());
+
+                        var endRepeatMonth = $('#edit-event-form').find('#form_endRepeat_month').val();
+                        var endRepeatDay = $('#edit-event-form').find('#form_endRepeat_day').val();
+                        var endRepeatYear = $('#edit-event-form').find('#form_endRepeat_year').val();
+                        if(!checkRepeatDate(endRepeatYear, year, endRepeatMonth, month, endRepeatDay, day, val)) {
+                            alert('End repeat date is invalid');
+                        } else {
+                            $.ajax({
+                                type: 'POST',
+                                url: $(this).attr('action'),
+                                data: $(this).serialize(),
+                                success: function(data){
+                                    if(data.SUCCESS) {
+                                        $('#edit-event-modal').modal('toggle');
+                                        location.reload();
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
+
+                function updateRepeatEndState(modifyVal) {
+                    var val = $('#edit-event-form').find('#form_repeat').val();
+
+                    var year = Number($(start_year).val());
+                    var month = Number($(start_month).val());
+                    var day = Number($(start_day).val());
+
+                    var endRepeatMonth = $('#edit-event-form').find('#form_endRepeat_month');
+                    var endRepeatDay = $('#edit-event-form').find('#form_endRepeat_day');
+                    var endRepeatYear = $('#edit-event-form').find('#form_endRepeat_year');
+
+                    if(val == "0") {
+                        $(endRepeatMonth).readonly();
+                        $(endRepeatDay).readonly();
+                        $(endRepeatYear).readonly();
+                    }else{
+                        $(endRepeatMonth).removereadonly();
+                        $(endRepeatDay).removereadonly();
+                        $(endRepeatYear).removereadonly();
+                        
+                        if(modifyVal) {
+                            if(val == "1") {
+                                var endRepeatDate = getNextDay(year, month, day);
+                            }else if(val == "2") {
+                                var endRepeatDate = getNextWeek(year, month, day);
+                            }else if(val == "3") {
+                                var endRepeatDate = getNextMonth(year, month, day);
+                            }else if(val == "4") {
+                                var endRepeatDate = getNextYear(year, month, day);
+                            }
+
+                            $(endRepeatYear).val(endRepeatDate.year);
+                            $(endRepeatMonth).val(endRepeatDate.month);
+                            $(endRepeatDay).val(endRepeatDate.day);
+                        }
+                    }
+                }
+
+                var start_month = $('#edit-event-form').find('#form_start_date_month');
+                if(d) {
+                    $(start_month).val(parseInt(d[1]));
+                }
+                $(start_month).readonly();
+
+                var start_day = $('#edit-event-form').find('#form_start_date_day');
+                if(d){
+                    $(start_day).val(parseInt(d[2]));
+                }
+                $(start_day).readonly();
+
+                var start_year = $('#edit-event-form').find('#form_start_date_year');
+                if(d){
+                    $(start_year).val(parseInt(d[0]));
+                }
+                $(start_year).readonly();
+
+                var end_month = $('#edit-event-form').find('#form_end_date_month');
+                if(d){
+                    $(end_month).val(parseInt(d[1]));
+                }
+                $(end_month).readonly();
+
+                var end_day = $('#edit-event-form').find('#form_end_date_day');
+                if(d){
+                    $(end_day).val(parseInt(d[2]));
+                }
+                $(end_day).readonly();
+
+                var end_year = $('#edit-event-form').find('#form_end_date_year');
+                if(d) {
+                    $(end_year).val(parseInt(d[0]));
+                }
+                $(end_year).readonly();
+
+                var end_repeat_month = $('#edit-event-form').find('#form_endRepeat_month');
+                if(d){
+                    $(end_repeat_month).val(parseInt(d[1]));
+                }
+
+                var end_repeat_day = $('#edit-event-form').find('#form_endRepeat_day');
+                if(d){
+                    $(end_repeat_day).val(parseInt(d[2]));
+                }
+                
+                var end_repeat_year = $('#edit-event-form').find('#form_endRepeat_year');
+                if(d){
+                    $(end_repeat_year).val(parseInt(d[0]));
+                }
+
+                if(d) {
+                    updateRepeatEndState(true);
+                } else{
+                    updateRepeatEndState(false);
+                }
+                $('#edit-event-form').find('#form_repeat').change(function(){
+                    updateRepeatEndState(true)
+                });
+
+                allDayClicked();
+                $('#edit-event-form').find('#form_allDay').change(allDayClicked);
+
+                var endField = $('#edit-event-form').find('#form_end').closest('fieldset')
+                $(endField).css('display', 'none');
+                $('#edit-event-form').find('#form_hasEnd').change(function(){
+                    if($(this).is(':checked')) {
+                        $(endField).css('display', 'block');
+                    } else {
+                        $(endField).css('display', 'none');
+                    }
+                });
+
+                editFormSubmitted();
+            };
+
+            var editIconClickEvents = function() {
+                $('.popover').find('.edit-icon').click(function(){
+                    $('.event-popover').popover('hide');
+                    var eid = $(this).closest('div').attr('id').split('-')[1];
+                    $.ajax({
+                        method: "POST",
+                        url: "{{ path('update_event') }}" + "/" + eid,
+                        success: function(form){
+                            $('#edit-event-form').html(form);
+                            onEventFormLoad();
+                            $('#edit-event-modal').modal('toggle');
+                        }
+                    });
+                });
+            };
+
+            var onPopoverClicked = function(){
+                $('.calendar').find('.event-popover').on('show.bs.popover', function(){
+                    $('.event-popover').not(this).popover('hide');
+                });
+                $('.calendar').find('.event-popover').on('shown.bs.popover', function(){
+                    editIconClickEvents();
+                });
+            };
+
+            var addIconClickEvents = function() {
+                $('#event-modal').find('.modal-header h1').text('Add Meet');
+                $('#event-delete').attr('href', '#');
+                $('#event-delete').css('display', 'none');
+                $('.calendar').find('.plus-icon').click(function(){
+                    var d = $(this).closest('td').attr('id').split('-');
+                    $.ajax({
+                        method: "GET",
+                        url: "{{ path('update_event_noid') }}",
+                        success: function(form){
+                            $('#edit-event-form').html(form);
+                            onEventFormLoad(d);
+                            $('#edit-event-modal').modal('toggle');
+                        }
+                    });
+                });
+            };
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="events-content px-3">
+        <h1>Events</h1>
+        <h2 id="display-date"></h2>
+        <div class="calendar-btn-group btn-group" role="group">
+            <button class="btn btn-primary previous-btn">Previous</button>
+            <button class="btn btn-primary today-btn">Today</button>
+            <button class="btn btn-primary next-btn">Next</button>
+        </div>
+        <table class="calendar">
+            <tr>
+                <th>Sunday</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+                <th>Saturday</th>
+            </tr>  
+        </table>
+    </div>
+{% endblock %}
+
+{% block modals %}
+    <div id="edit-event-modal" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content p-3">
+                <div class="modal-header">
+                    <h1></h1>
+                    <a id="event-delete" class="btn btn-danger" href="#" type="link">
+                        Delete Event
+                    </a>
+                </div>
+                <div class="modal-body">
+                    <div id="edit-event-form">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

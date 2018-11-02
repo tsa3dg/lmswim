@@ -1,0 +1,853 @@
+{% extends 'base.html.twig' %}
+
+{% block visiting_team_nav %}active{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        /* Font Definitions */
+        @font-face
+            {font-family:"Cambria Math";
+            panose-1:2 4 5 3 5 4 6 3 2 4;}
+        @font-face
+            {font-family:"Calibri Light";
+            panose-1:2 15 3 2 2 2 4 3 2 4;}
+        @font-face
+            {font-family:Calibri;
+            panose-1:2 15 5 2 2 2 4 3 2 4;}
+        @font-face
+            {font-family:Verdana;
+            panose-1:2 11 6 4 3 5 4 4 2 4;}
+        @font-face
+            {font-family:Tahoma;
+            panose-1:2 11 6 4 3 5 4 4 2 4;}
+        /* Style Definitions */
+        p.MsoNormal, li.MsoNormal, div.MsoNormal
+            {margin-top:0in;
+            margin-right:0in;
+            margin-bottom:8.0pt;
+            margin-left:0in;
+            line-height:107%;
+            font-size:11.0pt;
+            font-family:"Calibri",sans-serif;}
+        .MsoChpDefault
+            {font-family:"Calibri",sans-serif;}
+        .MsoPapDefault
+            {margin-bottom:8.0pt;
+            line-height:107%;}
+        @page WordSection1
+            {size:8.5in 11.0in;
+            margin:1.0in 1.0in 1.0in 1.0in;}
+        div.WordSection1
+            {page:WordSection1;}
+        /* List Definitions */
+        ol
+            {margin-bottom:0in;}
+        ul
+            {margin-bottom:0in;}
+        .visiting_team a {
+            text-decoration: underline;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <div class="visiting_team p-3">
+
+    <h1>Visiting Team</h1>
+
+    <p class=MsoNormal style='margin-top:3.0pt;margin-right:0in;margin-bottom:7.5pt;
+    margin-left:0in;line-height:normal'><span style='font-size:10.5pt;font-family:
+    "Verdana",sans-serif;color:#333333;background:white'>The Lake Manassas Blue
+    Dolphins would like to welcome you to our meet! The meet will be held at our
+    pool located 14900 Turtle Point Drive, Gainesville VA.</span></p>
+
+    <p class=MsoNormal style='margin-top:12.0pt;margin-right:0in;margin-bottom:
+    0in;margin-left:0in;margin-bottom:.0001pt;page-break-after:avoid'><span
+    style='font-size:16.0pt;line-height:107%;font-family:"Calibri Light",sans-serif;
+    color:#2E74B5'>Directions to Lake Manassas Pool</span></p>
+
+    <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+    margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'><span
+    style='font-size:11.5pt;font-family:"Tahoma",sans-serif;color:black;background:
+    white'>1) Head West on I-66W toward Exit 43A Gainesville</span></p>
+
+    <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+    margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'><span
+    style='font-size:11.5pt;font-family:"Tahoma",sans-serif;color:black;background:
+    white'>2) Take exit 43A to merge onto US-29 South (go 2.2 mi)</span></p>
+
+    <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+    margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'><span
+    style='font-size:11.5pt;font-family:"Tahoma",sans-serif;color:black;background:
+    white'>3) Turn left onto Baltusrol Blvd (go .5 mi)</span></p>
+
+    <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+    margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'><span
+    style='font-size:11.5pt;font-family:"Tahoma",sans-serif;color:black;background:
+    white'>4) Stop at Guard Gate</span></p>
+
+    <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+    margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'><span
+    style='font-size:11.5pt;font-family:"Tahoma",sans-serif;color:black;background:
+    white'>5) Turn right onto Turtle Point Drive (go 500 feet)</span></p>
+
+    <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+    margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'><span
+    style='font-size:11.5pt;font-family:"Tahoma",sans-serif;color:black;background:
+    white'>6) Pool is on the right.</span></p>
+
+    <p class=MsoNormal style='margin-top:3.0pt;margin-right:0in;margin-bottom:7.5pt;
+    margin-left:0in;line-height:normal'><span style='font-size:10.5pt;font-family:
+    "Verdana",sans-serif;color:#333333;background:white'>&nbsp;</span></p>
+
+    <p class=MsoNormal style='margin-top:12.0pt;margin-right:0in;margin-bottom:
+    0in;margin-left:0in;margin-bottom:.0001pt;page-break-after:avoid'><span
+    style='font-size:16.0pt;line-height:107%;font-family:"Calibri Light",sans-serif;
+    color:#2E74B5'>PARKING</span></p>
+
+    <p class=MsoNormal style='margin-top:3.0pt;margin-right:0in;margin-bottom:7.5pt;
+    margin-left:0in;line-height:normal'><b><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif;color:#333333;background:white'>No Parking on
+    GRASS! 4 wheels on pavement and obey the NO PARKING signs. Cars will get
+    stuck in mud and/or towed at owner expense. Please follow instructions given
+    by parking attendant and please be considerate of the Lake Manassas residents
+    when parking in the neighborhood. Parking will be on 1 side only, the right
+    side of Turtle point as you approach the pool entrance. </span></b></p>
+
+    <p class=MsoNormal style='margin-top:3.0pt;margin-right:0in;margin-bottom:7.5pt;
+    margin-left:0in;line-height:normal'><a
+    href="{{ path('docs_parking') }}"><b><span
+    style='font-size:10.5pt;font-family:"Verdana",sans-serif;color:#333333;
+    background:white'>Click Here for more information</span></b></a></p>
+
+    <p class=MsoNormal style='margin-top:12.0pt;margin-right:0in;margin-bottom:
+    0in;margin-left:0in;margin-bottom:.0001pt;page-break-after:avoid'><span
+    style='font-size:16.0pt;line-height:107%;font-family:"Calibri Light",sans-serif;
+    color:#2E74B5'>Meet Timeline</span></p>
+
+    <div align=center>
+
+    <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0
+    style='border-collapse:collapse'>
+    <tr style='height:.05pt'>
+    <td width=178 style='width:133.75pt;border:solid black 1.0pt;background:#FFFF99;
+    padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+    text-align:center;line-height:normal'><b><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif'>Team</span></b></p>
+    </td>
+    <td width=203 style='width:152.6pt;border:solid black 1.0pt;border-left:none;
+    background:#FFFF99;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+    text-align:center;line-height:normal'><b><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif'>Start</span></b></p>
+    </td>
+    <td width=118 style='width:88.65pt;border:solid black 1.0pt;border-left:none;
+    background:#FFFF99;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+    text-align:center;line-height:normal'><b><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif'>Stop</span></b></p>
+    </td>
+    </tr>
+    <tr style='height:.05pt'>
+    <td width=178 style='width:133.75pt;border:solid black 1.0pt;border-top:none;
+    background:white;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+    text-align:center;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif'>Lake Manassas</span></p>
+    </td>
+    <td width=203 style='width:152.6pt;border-top:none;border-left:none;
+    border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+    white;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+    text-align:center;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif'>6:00 AM warmup</span></p>
+    </td>
+    <td width=118 style='width:88.65pt;border-top:none;border-left:none;
+    border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+    white;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+    text-align:center;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif'>6:20 AM</span></p>
+    </td>
+    </tr>
+    <tr style='height:.05pt'>
+    <td width=178 style='width:133.75pt;border:solid black 1.0pt;border-top:none;
+    background:white;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+    text-align:center;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif'>Visiting Team</span></p>
+    </td>
+    <td width=203 style='width:152.6pt;border-top:none;border-left:none;
+    border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+    white;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+    text-align:center;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif'>6:25 AM warmup</span></p>
+    </td>
+    <td width=118 style='width:88.65pt;border-top:none;border-left:none;
+    border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+    white;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+    text-align:center;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif'>6:45 AM</span></p>
+    </td>
+    </tr>
+    <tr style='height:.05pt'>
+    <td width=178 style='width:133.75pt;border:solid black 1.0pt;border-top:none;
+    background:white;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+    text-align:center;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif'>Meet</span></p>
+    </td>
+    <td width=203 style='width:152.6pt;border-top:none;border-left:none;
+    border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+    white;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+    text-align:center;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif'>6:30 AM Officials Meeting</span></p>
+    </td>
+    <td width=118 style='width:88.65pt;border-top:none;border-left:none;
+    border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+    white;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+    text-align:center;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif'></span></p>
+    </td>
+    </tr>
+       <tr style='height:.05pt'>
+    <td width=178 style='width:133.75pt;border:solid black 1.0pt;border-top:none;
+    background:white;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+    text-align:center;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif'></span></p>
+    </td>
+    <td width=203 style='width:152.6pt;border-top:none;border-left:none;
+    border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+    white;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+    text-align:center;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif'>6:30 AM Clerk of Course Meeting</span></p>
+    </td>
+    <td width=118 style='width:88.65pt;border-top:none;border-left:none;
+    border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+    white;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+    text-align:center;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif'></span></p>
+    </td>
+    </tr>
+       <tr style='height:.05pt'>
+    <td width=178 style='width:133.75pt;border:solid black 1.0pt;border-top:none;
+    background:white;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+    text-align:center;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif'></span></p>
+    </td>
+    <td width=203 style='width:152.6pt;border-top:none;border-left:none;
+    border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+    white;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+    text-align:center;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif'>6:45 AM Timer and Recorders Meeting</span></p>
+    </td>
+    <td width=118 style='width:88.65pt;border-top:none;border-left:none;
+    border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+    white;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+    text-align:center;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif'></span></p>
+    </td>
+    </tr>
+       <tr style='height:.05pt'>
+    <td width=178 style='width:133.75pt;border:solid black 1.0pt;border-top:none;
+    background:white;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+    text-align:center;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif'></span></p>
+    </td>
+    <td width=203 style='width:152.6pt;border-top:none;border-left:none;
+    border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+    white;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+    text-align:center;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif'>6:58 AM National Anthem</span></p>
+    </td>
+    <td width=118 style='width:88.65pt;border-top:none;border-left:none;
+    border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+    white;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+    text-align:center;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif'></span></p>
+    </td>
+    </tr>
+       <tr style='height:.05pt'>
+    <td width=178 style='width:133.75pt;border:solid black 1.0pt;border-top:none;
+    background:white;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+    text-align:center;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif'></span></p>
+    </td>
+    <td width=203 style='width:152.6pt;border-top:none;border-left:none;
+    border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+    white;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+    text-align:center;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif'>7:00 AM meet</span></p>
+    </td>
+    <td width=118 style='width:88.65pt;border-top:none;border-left:none;
+    border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+    white;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+    text-align:center;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif'></span></p>
+    </td>
+    </tr>
+       <tr style='height:.05pt'>
+    <td width=178 style='width:133.75pt;border:solid black 1.0pt;border-top:none;
+    background:white;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+    text-align:center;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif'></span></p>
+    </td>
+    <td width=203 style='width:152.6pt;border-top:none;border-left:none;
+    border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+    white;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+    text-align:center;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif'>7:05 AM Scoring Meeting</span></p>
+    </td>
+    <td width=118 style='width:88.65pt;border-top:none;border-left:none;
+    border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+    white;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+    text-align:center;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif'></span></p>
+    </td>
+    </tr>
+       <tr style='height:.05pt'>
+    <td width=178 style='width:133.75pt;border:solid black 1.0pt;border-top:none;
+    background:white;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+    text-align:center;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif'></span></p>
+    </td>
+    <td width=203 style='width:152.6pt;border-top:none;border-left:none;
+    border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+    white;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+    text-align:center;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif'>7:45 AM Ribbons Start Time</span></p>
+    </td>
+    <td width=118 style='width:88.65pt;border-top:none;border-left:none;
+    border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+    white;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+    text-align:center;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif'></span></p>
+    </td>
+    </tr>
+       <tr style='height:.05pt'>
+    <td width=178 style='width:133.75pt;border:solid black 1.0pt;border-top:none;
+    background:white;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+    text-align:center;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif'></span></p>
+    </td>
+    <td width=203 style='width:152.6pt;border-top:none;border-left:none;
+    border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+    white;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+    text-align:center;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif'>~9:30 AM (at 9-10 Backstroke) Shift Change</span></p>
+    </td>
+    <td width=118 style='width:88.65pt;border-top:none;border-left:none;
+    border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+    white;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+    text-align:center;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif'></span></p>
+    </td>
+    </tr>
+      <tr style='height:.05pt'>
+    <td width=178 style='width:133.75pt;border:solid black 1.0pt;border-top:none;
+    background:white;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+    text-align:center;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif'></span></p>
+    </td>
+    <td width=203 style='width:152.6pt;border-top:none;border-left:none;
+    border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+    white;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+    text-align:center;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif'>~11:30 AM Meet Ends</span></p>
+    </td>
+    <td width=118 style='width:88.65pt;border-top:none;border-left:none;
+    border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+    white;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+    text-align:center;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif'></span></p>
+    </td>
+    </tr>
+    </table>
+
+    </div>
+
+    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+    normal'><span style='font-size:7.5pt;font-family:"Verdana",sans-serif;
+    color:#333333;background:white'>&nbsp;</span></p>
+
+    <p class=MsoNormal style='margin-top:12.0pt;margin-right:0in;margin-bottom:
+    0in;margin-left:0in;margin-bottom:.0001pt;page-break-after:avoid'><span
+    style='font-size:16.0pt;line-height:107%;font-family:"Calibri Light",sans-serif;
+    color:#2E74B5'>Entries</span></p>
+
+    <p class=MsoNormal style='margin-top:3.0pt;margin-right:0in;margin-bottom:7.5pt;
+    margin-left:0in;line-height:normal'><span style='font-size:10.5pt;font-family:
+    "Verdana",sans-serif;color:#333333;background:white'>There will be
+    approximately 100 LMST swimmers in this meet.&nbsp; </span></p>
+
+    <p class=MsoNormal style='margin-top:5.0pt;margin-right:0in;margin-bottom:5.0pt;
+    margin-left:.5in;text-indent:-.25in;line-height:normal'><span style='font-size:
+    7.5pt;font-family:"Verdana",sans-serif;color:#333333'>•<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </span></span><span style='font-size:10.5pt;font-family:"Verdana",sans-serif;
+    color:#333333'>All entries and team record files are due to Taylor Arnold </span><a
+    href="mailto:taylorsarnold@yahoo.com"><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif;color:blue'>taylorsarnold@yahoo.com</span></a><span
+    style='font-size:10.5pt;font-family:"Verdana",sans-serif;color:#333333'> by
+    Thursday at 8 pm.&nbsp;</span></p>
+
+    <p class=MsoNormal style='margin-top:5.0pt;margin-right:0in;margin-bottom:5.0pt;
+    margin-left:.5in;text-indent:-.25in;line-height:normal'><span style='font-size:
+    7.5pt;font-family:"Verdana",sans-serif;color:#333333'>•<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </span></span><span style='font-size:10.5pt;font-family:"Verdana",sans-serif;
+    color:#333333;background:white'>Relays are authorized up to three relay teams
+    per team per event.&nbsp; It is recommended that the Relay Teams are
+    assigned to lanes 3 and 4.&nbsp; Lane assignments are as follows:</span></p>
+
+    <p class=MsoNormal style='margin-top:5.0pt;margin-right:0in;margin-bottom:5.0pt;
+    margin-left:1.0in;text-indent:-.25in;line-height:normal'><span
+    style='font-size:7.5pt;font-family:"Verdana",sans-serif;color:#333333'>•<span
+    style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+    style='font-size:10.5pt;font-family:"Verdana",sans-serif;color:#333333;
+    background:white'>Visiting Team: Lanes 1, 3, and 5</span></p>
+
+    <p class=MsoNormal style='margin-top:5.0pt;margin-right:0in;margin-bottom:5.0pt;
+    margin-left:1.0in;text-indent:-.25in;line-height:normal'><span
+    style='font-size:7.5pt;font-family:"Verdana",sans-serif;color:#333333'>•<span
+    style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+    style='font-size:10.5pt;font-family:"Verdana",sans-serif;color:#333333;
+    background:white'>Lake Manassas: Lanes 2, 4 and 6</span></p>
+
+    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+    normal'></p>
+
+    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+    normal'><span style='font-size:16.0pt;font-family:"Calibri Light",sans-serif;
+    color:#2E74B5'>&nbsp;</span></p>
+
+    <p class=MsoNormal style='margin-top:12.0pt;margin-right:0in;margin-bottom:
+    0in;margin-left:0in;margin-bottom:.0001pt;page-break-after:avoid'><span
+    style='font-size:16.0pt;line-height:107%;font-family:"Calibri Light",sans-serif;
+    color:#2E74B5'>Volunteers and Equipment</span></p>
+
+    <p class=MsoNormal align=center style='margin-top:3.0pt;margin-right:0in;
+    margin-bottom:7.5pt;margin-left:0in;text-align:center;line-height:normal'><b><span
+    style='font-size:10.5pt;font-family:"Verdana",sans-serif;color:#333333;
+    background:white'>Visiting Team Personnel &amp; Equipment Summary</span></b></p>
+
+    <div align=center>
+
+    <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0
+    style='border-collapse:collapse'>
+    <tr style='height:.05pt'>
+    <td width=387 colspan=2 style='width:290.25pt;border:solid black 1.0pt;
+    background:#FFFF99;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+    text-align:center;line-height:normal'><b><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif;color:#333333'>Personnel</span></b></p>
+    </td>
+    <td width=420 colspan=2 style='width:315.15pt;border:solid black 1.0pt;
+    border-left:none;background:#FFFF99;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+    text-align:center;line-height:normal'><b><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif;color:#333333'>Equipment</span></b></p>
+    </td>
+    </tr>
+    <tr style='height:.05pt'>
+    <td width=219 valign=top style='width:163.95pt;border:solid black 1.0pt;
+    border-top:none;background:white;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal style='margin-top:3.0pt;margin-right:0in;margin-bottom:
+    7.5pt;margin-left:0in;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif;color:#333333'>1 Head Timer</span></p>
+    <p class=MsoNormal style='margin-top:3.0pt;margin-right:0in;margin-bottom:
+    7.5pt;margin-left:0in;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif;color:#333333'>9 Timers</span></p>
+    <p class=MsoNormal style='margin-top:3.0pt;margin-right:0in;margin-bottom:
+    7.5pt;margin-left:0in;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif;color:#333333'>3 Recorders</span></p>
+    <p class=MsoNormal style='margin-top:3.0pt;margin-right:0in;margin-bottom:
+    7.5pt;margin-left:0in;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif;color:#333333'>3-5 Stroke &amp; Turn
+    Officials</span></p>
+    <p class=MsoNormal style='margin-top:3.0pt;margin-right:0in;margin-bottom:
+    7.5pt;margin-left:0in;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif;color:#333333'>1 Referee</span></p>
+    <p class=MsoNormal style='margin-top:3.0pt;margin-right:0in;margin-bottom:
+    7.5pt;margin-left:0in;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif;color:#333333'>1 Starter</span></p>
+    </td>
+    <td width=168 valign=top style='width:126.3pt;border-top:none;border-left:
+    none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+    background:white;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal style='margin-top:3.0pt;margin-right:0in;margin-bottom:
+    7.5pt;margin-left:0in;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif;color:#333333'>2 Runners</span></p>
+    <p class=MsoNormal style='margin-top:3.0pt;margin-right:0in;margin-bottom:
+    7.5pt;margin-left:0in;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif;color:#333333'>2 Clerk of Course</span></p>
+    <p class=MsoNormal style='margin-top:3.0pt;margin-right:0in;margin-bottom:
+    7.5pt;margin-left:0in;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif;color:#333333'>2 Scorers</span></p>
+    <p class=MsoNormal style='margin-top:3.0pt;margin-right:0in;margin-bottom:
+    7.5pt;margin-left:0in;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif;color:#333333'>1 Computer Support</span></p>
+    <p class=MsoNormal style='margin-top:3.0pt;margin-right:0in;margin-bottom:
+    7.5pt;margin-left:0in;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif;color:#333333'>2 Ribbons Support</span></p>
+    </td>
+    <td width=258 valign=top style='width:193.3pt;border-top:none;border-left:
+    none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+    background:white;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal style='margin-top:3.0pt;margin-right:0in;margin-bottom:
+    7.5pt;margin-left:0in;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif;color:#333333'>Stopwatches for Visiting
+    Timers</span></p>
+    <p class=MsoNormal style='margin-top:3.0pt;margin-right:0in;margin-bottom:
+    7.5pt;margin-left:0in;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif;color:#333333'>Starting System (for backup)</span></p>
+    <p class=MsoNormal style='margin-top:3.0pt;margin-right:0in;margin-bottom:
+    7.5pt;margin-left:0in;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif;color:#333333'>Computer (for backup)</span></p>
+    <p class=MsoNormal style='margin-top:3.0pt;margin-right:0in;margin-bottom:
+    7.5pt;margin-left:0in;line-height:normal'><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif;color:#333333'>Printer (for backup)</span></p>
+    </td>
+    <td width=162 style='width:121.85pt;border-top:none;border-left:none;
+    border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+    white;padding:0in .15pt 0in .15pt;height:.05pt'>
+    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+    normal'>&nbsp;</p>
+    </td>
+    </tr>
+    <tr height=0>
+    <td width=193 style='border:none'></td>
+    <td width=151 style='border:none'></td>
+    <td width=228 style='border:none'></td>
+    <td width=134 style='border:none'></td>
+    </tr>
+    </table>
+
+    </div>
+
+    <p class=MsoNormal>&nbsp;</p>
+
+    <p class=MsoNormal style='margin-top:5.0pt;margin-right:0in;margin-bottom:5.0pt;
+    margin-left:.5in;text-indent:-.25in;line-height:normal'><span style='font-size:
+    7.5pt;font-family:"Verdana",sans-serif;color:#333333'>•<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </span></span><b><span style='font-size:10.5pt;font-family:"Verdana",sans-serif;
+    color:#333333;background:white'>Timers and Recorders</span></b></p>
+
+    <p class=MsoNormal style='margin-top:5.0pt;margin-right:0in;margin-bottom:5.0pt;
+    margin-left:1.0in;text-indent:-.25in;line-height:normal'><span
+    style='font-size:7.5pt;font-family:"Verdana",sans-serif;color:#333333'>•<span
+    style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><b><span
+    style='font-size:10.5pt;font-family:"Verdana",sans-serif;color:#333333;
+    background:white'>Head Timer:</span></b><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif;color:#333333;background:white'>&nbsp;&nbsp;One
+    per team - Check in with the announcer upon arrival.</span></p>
+
+    <p class=MsoNormal style='margin-top:5.0pt;margin-right:0in;margin-bottom:5.0pt;
+    margin-left:1.0in;text-indent:-.25in;line-height:normal'><span
+    style='font-size:7.5pt;font-family:"Verdana",sans-serif;color:#333333'>•<span
+    style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><b><span
+    style='font-size:10.5pt;font-family:"Verdana",sans-serif;color:#333333;
+    background:white'>Lane Timers:</span></b><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif;color:#333333;background:white'>&nbsp;&nbsp;Visiting
+    Team is assigned 2 timers in lanes 2, 4, 6. And 1 timer in lanes 1,3, and 5.
+    We need two timers from the Visiting Team for each of lanes 2, 4, and 6. Total
+    9 timers needed.</span></p>
+
+    <p class=MsoNormal style='margin-top:5.0pt;margin-right:0in;margin-bottom:5.0pt;
+    margin-left:1.0in;text-indent:-.25in;line-height:normal'><span
+    style='font-size:7.5pt;font-family:"Verdana",sans-serif;color:#333333'>•<span
+    style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><b><span
+    style='font-size:10.5pt;font-family:"Verdana",sans-serif;color:#333333;
+    background:white'>Recorders:</span></b><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif;color:#333333;background:white'>&nbsp;&nbsp;Visiting
+    Team is assigned lanes 1, 3, and 5.</span></p>
+
+    <p class=MsoNormal style='margin-top:5.0pt;margin-right:0in;margin-bottom:5.0pt;
+    margin-left:1.0in;text-indent:-.25in;line-height:normal'><span
+    style='font-size:7.5pt;font-family:"Verdana",sans-serif;color:#333333'>•<span
+    style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+    style='font-size:10.5pt;font-family:"Verdana",sans-serif;color:#333333;
+    background:white'>The Timer and Recorder Meeting will be held at 6:45am near
+    the starter/referee position on the pool deck. First shift timers should come
+    with watches, prepared to move directly to the starting end of the pool for the
+    start of the meet at 7:00am.</span></p>
+
+    <p class=MsoNormal style='margin-top:5.0pt;margin-right:0in;margin-bottom:5.0pt;
+    margin-left:1.0in;text-indent:-.25in;line-height:normal'><span
+    style='font-size:7.5pt;font-family:"Verdana",sans-serif;color:#333333'>•<span
+    style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+    style='font-size:10.5pt;font-family:"Verdana",sans-serif;color:#333333;
+    background:white'>Please bring stopwatches for use during the
+    meet.</span></p>
+
+    <p class=MsoNormal style='margin-top:5.0pt;margin-right:0in;margin-bottom:5.0pt;
+    margin-left:.5in;line-height:normal'><span style='font-size:7.5pt;font-family:
+    "Verdana",sans-serif;color:#333333;background:white'>&nbsp;</span></p>
+
+    <p class=MsoNormal style='margin-top:5.0pt;margin-right:0in;margin-bottom:5.0pt;
+    margin-left:.5in;text-indent:-.25in;line-height:normal'><span style='font-size:
+    7.5pt;font-family:"Verdana",sans-serif;color:#333333'>•<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </span></span><b><span style='font-size:10.5pt;font-family:"Verdana",sans-serif;
+    color:#333333;background:white'>Officials&nbsp;and Equipment</span></b></p>
+
+    <p class=MsoNormal style='margin-top:5.0pt;margin-right:0in;margin-bottom:5.0pt;
+    margin-left:1.0in;text-indent:-.25in;line-height:normal'><span
+    style='font-size:7.5pt;font-family:"Verdana",sans-serif;color:#333333'>•<span
+    style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+    style='font-size:10.5pt;font-family:"Verdana",sans-serif;color:#333333;
+    background:white'>The Official Coordinators for this meet are </span><span
+    style='font-size:10.5pt;font-family:"Verdana",sans-serif;color:#333333'>Jim
+    Polhamus<span style='background:white'>. The Visiting Team is asked to provide
+    three to five Stroke and Turn Officials, one Referee and one Starter for wet
+    deck operations.&nbsp; Please bring your starting system as a back-up. Specific
+    assignments will be made at the Officials Meeting at 6:30 am near the pool
+    deck. Training of new officials is authorized so please have them attend the
+    officials meeting for assignment.&nbsp;</span></span></p>
+
+    <p class=MsoNormal style='margin-top:5.0pt;margin-right:0in;margin-bottom:5.0pt;
+    margin-left:1.0in;text-indent:-.25in;line-height:normal'><span
+    style='font-size:7.5pt;font-family:"Verdana",sans-serif;color:#333333'>•<span
+    style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+    style='font-size:10.5pt;font-family:"Verdana",sans-serif;color:#333333;
+    background:white'>Meet participants are reminded that the deck officials are
+    responsible for providing the conditions for a fair and equitable meet.&nbsp;
+    The team head coaches should bring any questions concerning results, scores,
+    disqualifications, times, records, awards or lane/heat assignments to the Head
+    Referee. Matters will be resolved as quickly as possible with the officials
+    concerned.</span></p>
+
+    <p class=MsoNormal style='margin-top:5.0pt;margin-right:0in;margin-bottom:5.0pt;
+    margin-left:1.0in;text-indent:-.25in;line-height:normal'><span
+    style='font-size:7.5pt;font-family:"Verdana",sans-serif;color:#333333'>•<span
+    style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><b><span
+    style='font-size:10.5pt;font-family:"Verdana",sans-serif;color:#333333;
+    background:white'>LMST does not plan to use fly-over starts at this meet</span></b><span
+    style='font-size:10.5pt;font-family:"Verdana",sans-serif;color:#333333;
+    background:white'>.&nbsp; &nbsp;</span></p>
+
+    <p class=MsoNormal style='margin-top:5.0pt;margin-right:0in;margin-bottom:5.0pt;
+    margin-left:1.0in;text-indent:-.25in;line-height:normal'><span
+    style='font-size:7.5pt;font-family:"Verdana",sans-serif;color:#333333'>•<span
+    style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+    style='font-size:10.5pt;font-family:"Verdana",sans-serif;color:#333333;
+    background:white'>The backstroke flags at each end of the pool are located at
+    the 5 meter standard.</span></p>
+
+    <p class=MsoNormal style='margin-top:5.0pt;margin-right:0in;margin-bottom:5.0pt;
+    margin-left:.5in;line-height:normal'><span style='font-size:7.5pt;font-family:
+    "Verdana",sans-serif;color:#333333;background:white'>&nbsp;</span></p>
+
+    <p class=MsoNormal style='margin-top:5.0pt;margin-right:0in;margin-bottom:5.0pt;
+    margin-left:.5in;text-indent:-.25in;line-height:normal'><span style='font-size:
+    7.5pt;font-family:"Verdana",sans-serif;color:#333333'>•<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </span></span><b><span style='font-size:10.5pt;font-family:"Verdana",sans-serif;
+    color:#333333;background:white'>Administrative Officials (Scoring, Computers,
+    Runners, Clerk of Course, Awards)</span></b></p>
+
+    <p class=MsoNormal style='margin-top:5.0pt;margin-right:0in;margin-bottom:5.0pt;
+    margin-left:1.0in;text-indent:-.25in;line-height:normal'><span
+    style='font-size:7.5pt;font-family:"Verdana",sans-serif;color:#333333'>•<span
+    style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+    style='font-size:10.5pt;font-family:"Verdana",sans-serif;color:#333333;
+    background:white'>The On-deck volunteer Coordinators for this meet are&nbsp;</span><span
+    style='font-size:10.5pt;font-family:"Verdana",sans-serif;color:#333333;
+    background:yellow'>Cheryl Walker/Ray Wilcoski/Hermann Segmuller.</span><span
+    style='font-size:10.5pt;font-family:"Verdana",sans-serif;color:#333333;
+    background:white'>&nbsp; The Coordinators will be available throughout the meet
+    if you have questions or concerns.&nbsp; </span></p>
+
+    <p class=MsoNormal style='margin-top:5.0pt;margin-right:0in;margin-bottom:5.0pt;
+    margin-left:1.5in;text-indent:-.25in;line-height:normal'><span
+    style='font-size:7.5pt;font-family:"Verdana",sans-serif;color:#333333'>•<span
+    style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><b><span
+    style='font-size:10.5pt;font-family:"Verdana",sans-serif;color:#333333;
+    background:white'>Runners:</span></b><span style='font-size:10.5pt;font-family:
+    "Verdana",sans-serif;color:#333333;background:white'>&nbsp;Each team will
+    provide two runners per shift throughout the meet.&nbsp; Runners should check
+    in with the Clerk of Course at the upper pavilion&nbsp;at 6:50 am for
+    instructions and when changing shifts.</span></p>
+
+    <p class=MsoNormal style='margin-top:5.0pt;margin-right:0in;margin-bottom:5.0pt;
+    margin-left:1.5in;text-indent:-.25in;line-height:normal'><span
+    style='font-size:7.5pt;font-family:"Verdana",sans-serif;color:#333333'>•<span
+    style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><b><span
+    style='font-size:10.5pt;font-family:"Verdana",sans-serif;color:#333333;
+    background:white'>Clerk of Course:</span></b><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif;color:#333333;background:white'>&nbsp; The main Clerk of Course 
+    is under the pavilion at the start end of the pool.  Please check in by 6:30 AM. The Visiting Team 
+    is asked to provide at least two volunteers throughout the meet to assist with organizing heats, 
+    identifying swimmers and moving heats to the starting blocks.  Please notify Clerk of Course 
+    of any no show swimmers or scratches at your earliest opportunity. &nbsp;</span></p>
+
+    <p class=MsoNormal style='margin-top:5.0pt;margin-right:0in;margin-bottom:5.0pt;
+    margin-left:1.5in;text-indent:-.25in;line-height:normal'><span
+    style='font-size:7.5pt;font-family:"Verdana",sans-serif;color:#333333'>•<span
+    style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><b><span
+    style='font-size:10.5pt;font-family:"Verdana",sans-serif;color:#333333;
+    background:white'>Scoring Volunteers:&nbsp;</span></b><span style='font-size:
+    10.5pt;font-family:"Verdana",sans-serif;color:#333333;background:white'>Scoring is 
+    located in the office near the entrance.  Each team will provide two volunteers to 
+    assist with scoring throughout the meet. These volunteers will indicate initial 
+    times achieved and verify computer entries.  A minimum of one person per team will 
+    be available at all times until meet results are finalized.  A scoring meeting will 
+    take place at 7:05am in the scoring area for these volunteers.</span></p>
+
+    <p class=MsoNormal style='margin-top:5.0pt;margin-right:0in;margin-bottom:5.0pt;
+    margin-left:1.5in;text-indent:-.25in;line-height:normal'><span
+    style='font-size:7.5pt;font-family:"Verdana",sans-serif;color:#333333'>•<span
+    style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><b><span
+    style='font-size:10.5pt;font-family:"Verdana",sans-serif;color:#333333;
+    background:white'>Computer Operations:</span></b><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif;color:#333333;background:white'>&nbsp;The
+    Computer Operators for this meet is </span><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif;color:#333333;background:yellow'>Taylor
+    Arnold.</span><span style='font-size:10.5pt;font-family:"Verdana",sans-serif;
+    color:#333333;background:white'> &nbsp; Computers and printers will be in the
+    scoring area and must be set up by 6:30am. Team relay cards will be made
+    available at this time and will be handed out to the coaches. Each team should
+    provide one person to assist with data entry and printing throughout the
+    meet.&nbsp; Teams should bring their computers and printers as backups for the
+    meet.&nbsp; Computer personnel should meet in the office by the entrance of the
+    pool.</span></p>
+
+    <p class=MsoNormal style='margin-top:5.0pt;margin-right:0in;margin-bottom:5.0pt;
+    margin-left:1.5in;text-indent:-.25in;line-height:normal'><span
+    style='font-size:7.5pt;font-family:"Verdana",sans-serif;color:#333333'>•<span
+    style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><b><span
+    style='font-size:10.5pt;font-family:"Verdana",sans-serif;color:#333333;
+    background:white'>Ribbons:</span></b><span style='font-size:10.5pt;font-family:
+    "Verdana",sans-serif;color:#333333;background:white'>&nbsp; Each team will be
+    responsible for providing two ribbon volunteers starting at 7:45 am in the
+    scoring area.&nbsp; Please bring containers to sort ribbons and entry cards for
+    your team.</span></p>
+
+    <p class=MsoNormal style='margin-top:3.0pt;margin-right:0in;margin-bottom:7.5pt;
+    margin-left:0in;line-height:normal'><b><u><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif;color:#333333;background:white'>Other Meet
+    Support</span></u></b></p>
+
+    <p class=MsoNormal style='margin-top:5.0pt;margin-right:0in;margin-bottom:5.0pt;
+    margin-left:.5in;text-indent:-.25in;line-height:normal'><span style='font-size:
+    7.5pt;font-family:"Verdana",sans-serif;color:#333333'>•<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </span></span><span style='font-size:10.5pt;font-family:"Verdana",sans-serif;
+    color:#333333;background:white'>We have two volunteer shifts.&nbsp; The first
+    shift runs from 7:00am to ~9:30am.( before 9-10 Backstroke begins). The second shift
+    runs from ~9:30am until the end of the meet, usually 11:00am.</span></p>
+
+    <p class=MsoNormal style='margin-top:5.0pt;margin-right:0in;margin-bottom:5.0pt;
+    margin-left:.5in;text-indent:-.25in;line-height:normal'><span style='font-size:
+    7.5pt;font-family:"Verdana",sans-serif;color:#333333'>•<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </span></span><span style='font-size:10.5pt;font-family:"Verdana",sans-serif;
+    color:#333333;background:white'>Concessions will be available from the
+    beginning of the meet, providing a wonderful selection of foods and drinks for
+    sale.</span></p>
+
+    <p class=MsoNormal style='margin-top:5.0pt;margin-right:0in;margin-bottom:5.0pt;
+    margin-left:.5in;text-indent:-.25in;line-height:normal'><span style='font-size:
+    7.5pt;font-family:"Verdana",sans-serif;color:#333333'>•<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </span></span><span style='font-size:10.5pt;font-family:"Verdana",sans-serif;
+    color:#333333;background:white'>We will have an announcer to inform
+    participants and volunteers of reporting times for swimmers and volunteers as
+    well as general announcements and results.&nbsp; If you would like to submit
+    special event announcements or birthday information for announcement during the
+    meet, please give that information to the meet announcer at the meet.</span></p>
+
+    <p class=MsoNormal style='margin-top:5.0pt;margin-right:0in;margin-bottom:5.0pt;
+    margin-left:.5in;text-indent:-.25in;line-height:normal'><span style='font-size:
+    7.5pt;font-family:"Verdana",sans-serif;color:#333333'>•<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </span></span><span style='font-size:10.5pt;font-family:"Verdana",sans-serif;
+    color:#333333;background:white'>We will enforce the rule barring hair paint and
+    sharpie use except for event numbers on their swimmerís hands.&nbsp; Any child
+    not complying with this rule and unable to wash off the paint and/or markers
+    adequately will not be allowed to compete in the meet.</span></p>
+
+    <p class=MsoNormal style='margin-top:5.0pt;margin-right:0in;margin-bottom:5.0pt;
+    margin-left:.5in;text-indent:-.25in;line-height:normal'><span style='font-size:
+    7.5pt;font-family:"Verdana",sans-serif;color:#333333'>•<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </span></span><span style='font-size:10.5pt;font-family:"Verdana",sans-serif;
+    color:#333333;background:white'>Lifeguards are provided for water and pool deck
+    safety.&nbsp; The lifeguards will also provide first aid at the guard station
+    located near the restrooms.</span></p>
+
+    <p class=MsoNormal style='margin-top:5.0pt;margin-right:0in;margin-bottom:5.0pt;
+    margin-left:.5in;text-indent:-.25in;line-height:normal'><span style='font-size:
+    7.5pt;font-family:"Verdana",sans-serif;color:#333333'>•<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </span></span><span style='font-size:10.5pt;font-family:"Verdana",sans-serif;
+    color:#333333;background:white'>4 Chairs will be set up for the Visiting Team
+    Coaches on deck.</span></p>
+
+    <p class=MsoNormal style='margin-top:5.0pt;margin-right:0in;margin-bottom:5.0pt;
+    margin-left:.5in;text-indent:-.25in;line-height:normal'><span style='font-size:
+    7.5pt;font-family:"Verdana",sans-serif;color:#333333'>•<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </span></span><span style='font-size:10.5pt;font-family:"Verdana",sans-serif;
+    color:#333333;background:white'>The National Anthem will be played or sung at
+    6:58 am.</span></p>
+
+    <p class=MsoNormal style='margin-top:3.0pt;margin-right:0in;margin-bottom:7.5pt;
+    margin-left:0in;line-height:normal'><span style='font-size:10.5pt;font-family:
+    "Verdana",sans-serif;color:#333333;background:white'>If you need additional
+    information please contact our President and Co-Interim League
+    Rep,&nbsp;Estelle Baird (</span><a
+    href="mailto:lmst-league-rep@googlegroups.com"><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif;color:blue;background:white'>lmst-league-rep@googlegroups.com</span></a><span
+    style='font-size:10.5pt;font-family:"Verdana",sans-serif;color:#333333;
+    background:white'>)</span></p>
+
+    <p class=MsoNormal style='margin-top:3.0pt;margin-right:0in;margin-bottom:7.5pt;
+    margin-left:0in;line-height:normal'><span style='font-size:10.5pt;font-family:
+    "Verdana",sans-serif;color:#333333;background:white'>Very Respectfully,</span></p>
+
+    <p class=MsoNormal style='margin-top:3.0pt;margin-right:0in;margin-bottom:7.5pt;
+    margin-left:0in;line-height:normal'><span style='font-size:10.5pt;font-family:
+    "Verdana",sans-serif;color:#333333;background:white'>Hermann Segmuller, </span><span
+    style='font-size:7.5pt;font-family:"Verdana",sans-serif;color:#333333;
+    background:white'>&nbsp;</span><span style='font-family:"Verdana",sans-serif;
+    color:#333333;background:white'>LMST&nbsp;</span><span style='font-size:10.5pt;
+    font-family:"Verdana",sans-serif;color:#333333;background:white'>Co-Interim
+    League Representative and Volunteer Coordinator</span></p>
+
+    <p class=MsoNormal style='margin-top:3.0pt;margin-right:0in;margin-bottom:7.5pt;
+    margin-left:0in;line-height:normal'><span style='font-size:10.5pt;font-family:
+    "Verdana",sans-serif;color:#333333;background:white'>Other Contact Info: </span><a
+    href="mailto:lmst.swim@gmail.com"><span style='font-size:10.5pt;font-family:
+    "Verdana",sans-serif;color:blue;background:white'>lmst.swim@gmail.com</span></a></p>
+
+    <p class=MsoNormal style='margin-top:3.0pt;margin-right:0in;margin-bottom:7.5pt;
+    margin-left:0in;line-height:normal'><span style='font-size:7.5pt;font-family:
+    "Verdana",sans-serif;color:#333333;background:white'>&nbsp;</span></p>
+
+    <p class=MsoNormal style='margin-top:3.0pt;margin-right:0in;margin-bottom:7.5pt;
+    margin-left:0in;line-height:normal'><span style='font-size:7.5pt;font-family:
+    "Verdana",sans-serif;color:#333333;background:white'>&nbsp;</span></p>
+
+    </div>
+
+{% endblock %}

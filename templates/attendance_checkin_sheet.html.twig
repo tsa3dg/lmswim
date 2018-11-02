@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <style>
+        .checkin-sheet-content {
+            padding: 3em;
+        }
+        .checkin-sheet-content table {
+            width: 100%;
+            border: solid 1px black;
+        }
+        .checkin-sheet-content tr {
+            border: solid 1px black;
+        }
+        .checkin-sheet-content table td {
+            text-align: center;
+        }
+        .checkin-sheet-content table td:nth-child(2) {
+            text-align: left;
+        }
+        .checkin-sheet-content table th {
+            text-align: center;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="checkin-sheet-content">
+        <h1>Attendance Sheet Checkin</h1>
+        <h2>{{ meet.start|date("m/d/Y") }}</h2>
+        <h3>
+            {% if meet.team3 %}
+                {{ meet.start|date("Y") }} Divsionals
+            {% else %}
+                {{ meet.team2.name }} @ {{ meet.team1.name }}
+            {% endif %}
+        </h3>
+        <div class="checkin-sheet-list">
+            <table>
+                <tr>
+                    <th>Checkin</th>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Age Group</th>
+                </tr>
+                {% for athlete in attendees %}
+                    <tr>
+                        <td><input type="checkbox" disabled="disabled" /></td>
+                        <td>{{ athlete.last }} {{ athlete.first }}</td>
+                        <td>{{ athlete.sex }}</td>
+                        <td>{{ athlete.age }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}

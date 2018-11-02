@@ -1,0 +1,190 @@
+{% extends 'base.html.twig' %}
+
+{% block schedule_nav %}active{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .schedule-content {
+            text-align: center;
+        }
+        .schedule-content table {
+            width: 100%;
+        }
+        .schedule-content table tr:first-child{
+            text-align: left;
+        }
+        .schedule-content table tr:not(:first-child) {
+            border: solid 1px black;
+        }
+        .schedule-content table td {
+            padding: 1.5em;
+        }
+        .edit-icon {
+            text-align: right;
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        $(function(){
+            {% if is_granted('ROLE_ADMIN') %}
+                function addOption(e){
+                    $("#schedule-edit-form").find("#form_location option:not([value=\"{{ our_team_id }}\"])").remove();
+                    var optionNode = $(e).find('option:selected');
+                    var option = new Option(optionNode.text(), optionNode.val());
+                    $('#schedule-edit-form').find('#form_location').append($(option));
+                }
+
+                $('.edit-icon').find('a').click(function(){
+                    $('#schedule-modal').find('.modal-header h1').text('Edit Meet');
+                    var tag_id = $(this).attr('href');
+                    var id = tag_id.substring(tag_id.lastIndexOf('-')+1);
+                    $('#schedule-delete').attr('href', "{{ path('delete_schedule_noid') }}" + '/' + id);
+                    $('#schedule-delete').css('display', 'block');
+                    $.ajax({
+                        type: "GET",
+                        url: "{{ path('edit_schedule') }}" + "/" + id,
+                        success: function(form) {
+                            $('#schedule-edit-form').html(form);
+                            $('#schedule-modal').modal('toggle');
+
+                            addOption($('#schedule-edit-form').find('#form_opponent1'));
+
+                            $('#schedule-edit-form').find('#form_opponent1').change(function(){
+                                addOption(this);
+                            });
+                            $('#schedule-edit-form').find('#form_opponent2').change(function(){
+                                addOption(this);
+                            });
+                            fileHandle();
+                        }
+                    });
+                });
+
+                $('.add-icon').find('a').click(function(){
+                    $('#schedule-modal').find('.modal-header h1').text('Add Meet');
+                    $('#schedule-delete').attr('href', '#');
+                    $('#schedule-delete').css('display', 'none');
+                    $.ajax({
+                        type: "GET",
+                        url: "{{ path('edit_schedule') }}",
+                        success: function(form) {
+                            $('#schedule-edit-form').html(form);
+                            $('#schedule-modal').modal('toggle');
+
+                            addOption($('#schedule-edit-form').find('#form_opponent1'));
+
+                            $('#schedule-edit-form').find('#form_opponent1').change(function(){
+                                addOption(this);
+                            });
+                            $('#schedule-edit-form').find('#form_opponent2').change(function(){
+                                addOption(this);
+                            });
+                            fileHandle();
+                        }
+                    });
+                });
+            {% endif %}
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="schedule-content p-3">
+        <h1>2018 Meet Schedule</h1>
+        <table>
+            <tr>
+                <td>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <div class="add-icon">
+                            <a href="#add-meet"><img src="{{ asset('build/images/plus_icon.png') }}" /></a>
+                        </div>
+                    {% endif %}
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th></th>
+                <th>Date</th>
+                <th>Team</th>
+                <th>Location</th>
+                <th>Results</th>
+            </tr>
+            {% for meet in meets %}
+                <tr>
+                    <td class="edit-icon">
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="#edit-announcement-{{ meet.id }}"><img src="{{ asset('build/images/edit_icon.png') }}" /><a/>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{ meet.start|date('m/d/Y') }}
+                    </td>
+                    {% if meet.team3 %}
+                        <!-- Meet is a divisional -->
+                        <td>Divsionals</td>
+                        {% if meet.team1.code == team_code %}
+                            <td>Home</td>
+                        {% else %}
+                            <td>@{{ meet.team1.name }}</td>
+                        {% endif %}
+                    {% else %}
+                        {% if meet.team1.code == team_code %}
+                            <td>{{ meet.team2.name }}</td>
+                            <td>Home</td>
+                        {% else %}
+                            <td>{{ meet.team1.name }}</td>
+                            <td>Away</td>
+                        {% endif %}
+                    {% endif %}
+                    <td>
+                    {% if meet.resultsName %}
+                        <div>
+                            <a href="{{ meet.resultsName }}" alt="View Results">Results</a>
+                        </div>
+                        {% if meet.scoresName %}
+                            <div>
+                                <a href="{{ meet.scoresName }}" alt="View Scores">Scores</a>
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        {% if meet.meetTimelineName %}
+                            <div>
+                                <a href="{{ meet.meetTimelineName }}" alt="View Meet Timeline">Meet Timeline</a>
+                            </div>
+                        {% endif %}
+                        {% if meet.meetProgramName %}
+                            <div>
+                                <a href="{{ meet.meetProgramName }}" alt="View Meet Program">Meet Program</a>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
+
+{% block modals %}
+    <div id="schedule-modal" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content p-3">
+                <div class="modal-header">
+                    <h1></h1>
+                    <a id="schedule-delete" class="btn btn-danger" href="#" type="link">
+                        Delete Meet
+                    </a>
+                </div>
+                <div>
+                    <div id="schedule-edit-form">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

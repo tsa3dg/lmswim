@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        $(function(){
+
+        });
+    </script>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .users-content {
+            text-align: center;
+        }
+        .users-content table {
+            margin: auto;
+            width: 75%;
+        }
+        .users-content table tr {
+            border: solid 1px black;
+        }
+        .users-content table td {
+            padding: 1.5em;
+            text-align: left;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="users-content p-3">
+        <h1>Users</h1>
+        <table>
+            <tr>
+                <th></th>
+                <th>Username</th>
+                <th>Role</th>
+            </tr>
+            {% for user in users %}
+                <tr>
+                    <td>
+                        <div class="edit-icon">
+                            <a href="#edit-user-{{ user.id }}">
+                                <img src="{{ asset('build/images/edit_icon.png') }}" />
+                            </a>
+                        </div>
+                    </td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.roles[0] }}</td>
+                </tr>
+            {% endfor %}
+        </table>        
+    </div>
+{% endblock %}
+
+{% block modals %}
+    <div id="users-modal" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content p-3">
+                <div class="modal-header">
+                    <h1></h1>
+                </div>
+                <div>
+                    <a class="user-delete" href="#" type="link" class="btn btn-danger"></a>
+                    <div id="user-edit-form">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

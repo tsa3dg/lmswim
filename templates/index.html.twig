@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+
+{% block home_nav %}active{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        #announcement_list {
+            list-style-image: url("{{ asset('build/images/dolphin_icon.png') }}");
+        }
+        #announcement_list ul {
+            list-style-image: none;
+        }
+        #announcement_list h2 {
+            color: blue;
+        }
+        #announcement_list .announcement_date {
+            color: red;
+        }
+        .edit-icon {
+            width: 100px;
+            vertical-align: top;
+        }
+    </style>
+{% endblock %}
+
+{% if is_granted('ROLE_ADMIN') %}
+    {% block javascripts %}
+        <script type="text/javascript">
+            $(function(){
+                $('.edit-icon').find('a').click(function(){          
+                    var tag_id = $(this).attr('href');
+                    var id = tag_id.substring(tag_id.lastIndexOf('-')+1);
+                    $.ajax({
+                        type: "GET",
+                        url: "{{ path('edit_announcement') }}" + "/" + id,
+                        success: function(form) {
+                            $('#announcement-edit-form').html(form);
+                            var path = "{{ path('delete_announcement') }}";
+                            $('#announcement-delete').attr('href', path + '/' + id);
+                            $('#announcement-modal').modal('toggle');
+                        }
+                    });
+                });
+                $('.add-icon').find('a').click(function(){
+                    $('#announcement-delete').remove();
+                    $.ajax({
+                        type: "GET",
+                        url: "{{ path('edit_announcement') }}",
+                        success: function(form) {
+                            $('#announcement-edit-form').html(form);
+                            $('#announcement-modal').modal('toggle');
+                        }
+                    });
+                });
+            });
+        </script>
+    {% endblock %}
+{% endif %}
+
+{% block content %}
+    <ul id="announcement_list">
+        <table>
+        <tr>
+            <td>
+                <div class="add-icon">
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="#add-announcement"><img src="{{ asset('build/images/plus_icon.png') }}" /></a>
+                    {% endif %}
+                <div>
+            </td>
+        </tr>
+        {% for announcement in announcements %}
+            <tr>
+                <td class="edit-icon">
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="#edit-announcement-{{ announcement.id }}"><img src="{{ asset('build/images/edit_icon.png') }}" /><a/>
+                    {% endif %}
+                </td>
+                <td>
+                    <li class="pr-3">
+                        <h2><span class="announcement_date">{{ announcement.start|date("m/d/Y") }}</span> - {{ announcement.title }}</h2>
+                        <p>{{ announcement.atext|raw }}</p>   
+                    </li>
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+    </ul>
+{% endblock %}
+
+{% block modals %}
+    <div id="announcement-modal" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content p-3">
+                <div class="modal-header">
+                    <h1>Edit Announcement</h1>
+                </div>
+                <div class="modal-body">
+                    <a id="announcement-delete" href="#" type="link" class="btn btn-danger">Delete</a>
+                    <div id="announcement-edit-form">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,312 @@
+{% set scoring_calculator = false %}
+{% set manage_users = false %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+        <style>
+            * {
+                font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+            }
+
+            body {
+                background-image: url("{{ asset('build/images/swim_background.jpg') }}");
+            }
+
+            .banner {
+                border-color: cornflowerblue;
+                border-style: groove;
+                border-width: 2em;
+
+                /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#b3dced+0,29b8e5+50,bce0ee+100;Blue+Pipe */
+                background: #b3dced; /* Old browsers */
+                background: -moz-linear-gradient(top, #b3dced 0%, #29b8e5 50%, #bce0ee 100%); /* FF3.6-15 */
+                background: -webkit-linear-gradient(top, #b3dced 0%,#29b8e5 50%,#bce0ee 100%); /* Chrome10-25,Safari5.1-6 */
+                background: linear-gradient(to bottom, #b3dced 0%,#29b8e5 50%,#bce0ee 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3dced', endColorstr='#bce0ee',GradientType=0 ); /* IE6-9 */
+            }
+
+            .banner-text {
+                color: white;
+            }
+
+            .lm-sidebar {
+                background-color: blue;    
+            }
+
+            .navbar {
+                background-color: teal;
+            }
+
+            #lm-signin-modal .modal-content {
+                border-style: none;
+            }
+
+            .lm-section {
+                padding: 0px;
+                background-color: white;
+                margin-right: 1%;
+                flex: 0 0 73%;
+            }  
+
+            .lm-aside {
+                color: white;
+                text-align: center;
+                padding: 0px;
+            }
+
+            .lm-aside div {
+                padding: 1em;
+                background-color: blue;
+            }
+
+            .lm-aside div a, .lm-aside div h3, .lm-aside div a:hover {
+                text-decoration: none;
+                margin-bottom: 1.5em;
+            }
+
+            .base-content {
+                margin-left: 0px;
+            }
+
+            .facebook-link {
+                padding: 0px;
+            }
+
+            .lm-footer {
+                background-color: blue;
+                color: white;
+                text-align: center;
+            }
+            .lm-footer a{
+                color: white;
+            }
+            .sponsors div {
+                padding: 0px;
+                padding-bottom: 1em;
+            }
+            .dropdown > a {
+                background-color: teal!important;
+                border: none;
+                color: rgba(255,255,255,.5)!important;
+            }
+            .nav-item {
+                /*line-height: 1;*/
+            }
+        </style>
+        {% block stylesheets %}
+        {% endblock %}
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+        <script type="text/javascript">
+            var fileHandle = function(){
+                var form_group = $('.custom-file-input').closest('.form-group');
+                if($(form_group).children('legend').length == 0){
+                    $(form_group).each(function(){
+                        $(this).prepend('<legend class="col-form-label">' + 
+                            $(this).find('.custom-file-label').text() + '</legend>');
+                    });
+                }
+                $('.custom-file-input').change(function(){
+                    $(this).next().text($(this).val().split('\\').slice(-1)[0]);
+                });
+            }
+            $(function(){
+                $.fn.extend({
+                    disable: function() {
+                        return this.each(function(){
+                            $(this).attr('disabled', 'disabled');
+                        });
+                    },
+                    enable: function(){
+                        return this.each(function(){
+                            $(this).removeAttr('disabled');
+                        });
+                    },
+                    readonly: function(){
+                        return this.each(function(){
+                            $(this).attr('readonly', 'readonly');
+                        });
+                    },
+                    removereadonly: function(){
+                        return this.each(function(){
+                            $(this).removeAttr('readonly');
+                        });
+                    }
+                });
+                $.ajax({
+                    type: "GET",
+                    url: "{{ path('login') }}",
+                    success: function(respGet) {
+                        $('#lm-signin-modal').find('.modal-body').html(respGet);
+
+                        $('#loginForm').submit(function(e){
+                            e.preventDefault();
+                            $.ajax({
+                                type: "POST",
+                                url: "{{ path('login') }}",
+                                data: $(this).serialize(),
+                                success: function(respPost){
+                                    if(respPost.ADMIN_LOGIN_SUCCESS){
+                                        location.reload();
+                                    }else{
+                                        $('#lm-signin-modal').find('.modal-body').html(respPost);
+                                    }
+                                }
+                            });
+                        });
+                    }
+                });
+            });
+        </script>
+        {% block javascripts %}
+        {% endblock %}
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <div class="banner text-center py-5">
+                    <h1 class="d-inline banner-text">Lake Manassas Blue Dolphins</h1>
+                </div>
+            </header>
+            <div>
+                <nav class="navbar navbar-expand-md navbar-dark">
+                    <button class="navbar-toggler">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item {% block home_nav %}{% endblock %}">
+                                <a class="nav-link" href="{{ path('home') }}">Home</a>
+                            </li>
+                            <li class="nav-item {% block schedule_nav %}{% endblock %}">
+                                <a class="nav-link" href="{{ path('schedule_list') }}">Schedule</a>
+                            </li>
+                            <li class="nav-item {% block events_nav %}{% endblock %}">
+                                <a class="nav-link" href="{{ path('events_calendar') }}">Events</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#"
+                                    id="attendanceMenuLink" data-toggle="dropdown">Athletes</a>
+                                <div class="dropdown-menu" aira-labelledby="attendanceMenuLink">
+                                    <a class="dropdown-item" href="{{ path('attendance_list') }}">Attendance</a>
+                                    <a class="dropdown-item" href="{{ path('attendance_checkin_sheet') }}">Attendance Checkin Sheet</a>
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                        <a class="dropdown-item" href="{{ path('absentees_list' )}}">Notes and Absentees</a>
+                                    {% endif %}
+                                </div>
+                            </li>
+                            <li class="nav-item {% block records_nav %}{% endblock %}">
+                                <a class="nav-link" href="{{ path('records_list') }}">Records</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="https://www.signupgenius.com/go/904044eadae29a57-volunteers">Volunteer</a>
+                            </li>
+                            <li class="nav-item {% block visiting_team_nav %}{% endblock %}">
+                                <a class="nav-link" href="{{ path('visiting_team') }}">Visting Team</a>
+                            </li>
+                            {% if scoring_calculator %}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#"
+                                    id="toolsMenuLink" data-toggle="dropdown">Tools</a>
+                                <div class="dropdown-menu" aira-labelledby="toolsMenuLink">
+                                    <a class="dropdown-item" href="{{ path('scoring_calculator') }}">Scoring Calculator</a>
+                                </div>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                    <div class="collapse navbar-collapse justify-content-end">
+                        <ul class="navbar-nav">
+                            {% if is_granted('ROLE_ADMIN') %}
+                            {% endif %}
+                            <li class="nav-item">
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <div class="dropdown show">
+                                        <a class="nav-link btn-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown">{{ app.user.username }}</a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            {% if manage_users %}
+                                            <a class="dropdown-item" href="{{ path('users_list') }}">Manage Users</a>
+                                            {% endif %}
+                                            <a class="dropdown-item" href="{{ path('manager_list') }}">Manager</a>
+                                            <a class="dropdown-item" href="{{ path('logout') }}">Logout</a>
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <a class="nav-link" data-toggle="modal" data-target="#lm-signin-modal" href="#">Sign In</a>
+                                {% endif %}
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                <div class="row base-content mt-2">
+                    <section class="lm-section col-9">
+                        <div class="mainpage-content">
+                            {% block content %}
+                            {% endblock %}
+                        </div>
+                    </section>
+                    <aside class="lm-aside col-3">
+                        <div>
+                            <img src="{{ asset('build/images/lmlogo.png') }}" />
+                        </div>
+                        <div class="mt-2">
+                            <h3>2018 Registration</h3>
+                            <a type="link" href="https://goo.gl/forms/tKWeOAHuZX8omot82" class="btn-primary btn-lg btn-block">
+                                Click Here to Register
+                            </a>
+                            <a type="link" href="https://www.facebook.com/lmbluedolphins" class="btn-primary btn-lg btn-block facebook-link">
+                                <img src="{{ asset('build/images/facebook_logo.png') }}" />
+                            </a>
+                        </div>
+                        <div class="mt-2 sponsors">
+                            <h3>Sponsors</h3>
+                            <div>
+                                <a href="http://www.centurytile.com"><img src="{{ asset('build/images/century_tile.jpg') }}" /></a>
+                            </div>
+                            <div>
+                                <a href="https://www.culpeperwood.com"><img src="{{ asset('build/images/culpeper.jpg') }}" /></a>
+                            </div>
+                            <div>
+                                <a href="http://www.homesteadbuildingsystemsinc.com"><img src="{{ asset('build/images/HBS-Logo-for-Website.jpg') }}" /></a>
+                            </div>
+                            <div>
+                                <a href="http://homestdrealty.com"><img src="{{ asset('build/images/homestead.jpg') }}" /></a>
+                            </div>
+                            <div>
+                                <a href="http://www.ibsmillwork.com"><img src="{{ asset('build/images/ibs.png') }}" /></a>
+                            </div>
+                            <div>
+                                <a href="https://moraisvineyards.com"><img src="{{ asset('build/images/morais.jpg') }}" /></a>
+                            </div>
+                            <div>
+                                <a href="http://www.southlandinsulators.com"><img src="{{ asset('build/images/southland_insulators.jpg') }}" /></a>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+                <footer class="lm-footer py-2 my-2">
+                    <strong>Contact <a href="mailto:administrator@lmswim.x10host.com">administrator@lmswim.x10host.com</a> for any questions.</strong>
+                </footer>
+                <div id="lm-signin-modal" class="modal">
+                    <div class="modal-dialog">
+                        <div class="modal-content p-3">
+                            <div class="modal-header">
+                                <h1>Sign In</h1>
+                            </div>
+                            <div class="modal-body">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% block modals %}
+                {% endblock %}
+            </div>
+        </div>
+    </body>
+</html>

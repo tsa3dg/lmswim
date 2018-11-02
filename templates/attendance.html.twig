@@ -1,0 +1,272 @@
+{% extends 'base.html.twig' %}
+
+{% block attendance_nav %}active{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .attendance-content {
+            text-align: center;
+        }
+        .attendance-content table {
+            width: 100%;
+            border: 1px solid black;
+        }
+        .attendance-content table td:first-child {
+            text-align: left;
+        }
+        .attendance-content table tr:nth-child(odd) {
+            background-color: #87CEFA;
+        }
+        .attendance-content table tr:first-child {
+            background-color: white;
+        }
+        .attendance-alert-box {
+            text-align: left;
+        }
+        .attendance-instructions {
+            color: white!important;
+        }
+        .popover-section {
+            text-align: right;
+        }
+        .accordian a {
+            color: #007bff;
+        }
+        
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        $(function(){
+            $('.attendance-instructions').popover();
+
+            $('.key-icon').find('a').click(function(){
+                var key_btn = this;
+
+                var key_icon_id = $(this).parent().attr('id');
+                var aid = key_icon_id.substring(key_icon_id.lastIndexOf('_')+1);
+                $.ajax({
+                    type: "POST",
+                    url: "{{ path('unlock_athlete_noid') }}" + "/" + aid,
+                    success: function(data){
+                        $('#attendance-unlock-form').html(data);
+
+                        $('#attendance-unlock-form').find('form').submit(function(e){
+                            e.preventDefault();
+                            $.ajax({
+                                type: 'POST',
+                                url: $(this).attr('action'),
+                                data: $(this).serialize(),
+                                success: function(data){
+                                    if(data.SUCCESS) {
+
+                                        var birthday = $('#form_birthday_year').val() + '-' + $('#form_birthday_month').val() +
+                                        '-' + $('#form_birthday_day').val();
+
+                                        $('.attendance-alert-box')
+                                            .append('<div class="alert alert-success">Unlocked athlete: ' + data.ATHLETE_NAME + '</div>');
+
+                                        var selector_key_id = '#key_for_ath_' + aid;
+                                        $(selector_key_id).removeAttr('class');
+                                        $(selector_key_id).find('img').attr('src', "{{ asset('build/images/floppy_icon.png') }}");
+                                        $(selector_key_id).find('a').attr('title', "Update athlete attendance.");
+                                        var attending_cols = $(selector_key_id).closest('tr').children('.meet-col');
+                                        $(attending_cols).children('input:not(.old-meet-cb)').removeAttr('disabled');
+
+                                        var selector_notes_id = '#notes_for_ath_' + aid;
+                                        $(selector_notes_id).html('<a title="Add notes regarding meet attendance." href="#"><img src="' + 
+                                        '{{ asset("build/images/notes_icon.png") }}' + '"/></a>');
+
+                                        var selector_row_id = '#row_for_ath_' + aid;
+                                        $(selector_row_id).get(0).scrollIntoView();
+
+                                        $(selector_key_id).find('a').off('click').on('click', function(){
+                                            var attendings = new Object();
+                                            $(attending_cols).each(function(){
+                                                var input = $(this).children('input').first();
+                                                input_name = $(input).attr('name');
+                                                att_id = input_name.substring(input_name.lastIndexOf('_')+1);
+                                                attendings[att_id] = $(input).is(':checked') ? 1 : 0;
+                                            });
+                                            $.ajax({
+                                                type: "POST",
+                                                url: "{{ path('update_athlete_attendance') }}",
+                                                data: {attendance_entries : attendings, birthday: birthday},
+                                                success: function(data) {
+                                                    if(data.SUCCESS) {
+                                                        $('.attendance-alert-box')
+                                                            .append('<div class="alert alert-success">Updated attendance for athlete: ' + 
+                                                                data.ATHLETE_NAME + '</div>');
+                                                        $(selector_row_id).find('.meet-col input').attr('disabled', 'disabled');
+                                                        $(selector_key_id).find('img').attr('src', "{{ asset('build/images/key_icon.png') }}");
+                                                        $(selector_notes_id).html('');
+                                                    } else{
+                                                        $('.attendance-alert-box')
+                                                            .append('<div class="alert alert-danger">Error updating attendance: ' +
+                                                                data.ERROR_MSG + '</div>');
+                                                    }
+                                                }
+                                            });
+                                        });
+                                        
+                                        $(selector_notes_id).find('a').off('click').on('click', function(){
+                                            var url = "{{ path('athlete_notes_noid') }}" + '/' + aid;
+                                            $.ajax({
+                                                method: "GET",
+                                                url: url,
+                                                success: function(data) {
+                                                    data.notes.forEach(function(note){
+                                                        $('#form_meetNotes_' + note.meet_id).text(note.note);
+                                                    });
+                                                }
+                                            });
+                                            $('#attendance-notes-form').find('form').attr('action', url);
+                                            $('#attendance-notes-modal').modal('toggle');
+                                        })
+
+                                        $('#attendance-notes-form').find('form').submit(function(e){
+                                            e.preventDefault();
+                                            $.ajax({
+                                                method: 'POST',
+                                                url: $(this).attr('action'),
+                                                data: $(this).serialize(),
+                                                success: function(data){
+                                                    $('#attendance-notes-modal').modal('toggle');
+                                                }
+                                            });
+                                        })
+
+                                        // Close modal
+                                        $('#attendance-modal').modal('toggle');
+                                    }else{
+                                        $('.attendance-modal-error-box').addClass("alert alert-danger")
+                                            .text("Incorrect birthday supplied for this athlete!");
+                                    }
+                                }
+                            });
+                        });
+
+                        // Close modal
+                        $('#attendance-modal').modal('toggle');
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="attendance-content p-3">
+        <h1>Attendance</h1>
+        <div class="popover-section">
+            <a type="link" class="btn btn-primary attendance-instructions" data-toggle="popover"
+                data-html="true" data-trigger="hover" title="Attendance Instructions" data-content="
+                <p><strong>Perform the following steps: </strong><br/><br/>
+                <strong>Step 1) </strong>Click the <img src='{{ asset('build/images/key_icon.png') }}'> icon found on the 
+                same row with your child's name.<br/>
+                <strong>Step 2) </strong>In the modal that pops up, supply your child's birthday and click the
+                unlock button.<br/>
+                <strong>Step 3) </strong>Uncheck the boxes in the columns under the meets in which your child
+                will be absent.<br/>
+                <strong>Step 4) </strong>To save the changes, click the 
+                <img src='{{ asset('build/images/floppy_icon.png') }}' /> icon on the right.</p>
+            ">Instructions</a>
+        </div>
+        <div class="attendance-alert-box p-3"></div>
+        <table>
+            <tr>
+                <th>Athlete</th>
+                {% for meet in meets %}
+                    <th>{{ meet.start|date('m/d') }}</th>
+                {% endfor %}
+                <th></th>
+                <th></th>
+            </tr>
+            {% for i in range(0, attendance_entries|length-1, meets|length) %}
+                <tr id="row_for_ath_{{ attendance_entries[i].aid }}">
+                    <td>{{ attendance_entries[i].first }} {{ attendance_entries[i].last }}</td>
+                    {% for j in i..i-1+meets|length %}
+                        <td class="meet-col">
+                            <input name="att_{{ attendance_entries[j].id }}"
+                            {% if meets[j-i].start|date("Y/m/d") < "now"|date("Y/m/d") %}
+                                class="old-meet-cb"
+                            {% endif %}
+                            type="checkbox" 
+                            {% if attendance_entries[j].attending == 1 %}
+                                checked="checked"
+                            {% endif %} 
+                            disabled="disabled" />
+                        </td>
+                    {% endfor %}
+                    <td>
+                        <div id="key_for_ath_{{ attendance_entries[i].aid }}" class="key-icon">
+                            <a title="Unlock athlete." href="#"><img src="{{ asset('build/images/key_icon.png') }}" /></a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="notes_for_ath_{{ attendance_entries[i].aid }}" class="notes-icon">
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
+
+{% block modals %}
+    <div id="attendance-modal" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content p-3">
+                <div class="modal-header">
+                    <h1>Unlock Athlete</h1>
+                </div>
+                <div class="attendance-modal-error-box">
+                </div>
+                <div id="attendance-unlock-form">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="attendance-notes-modal" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content p-3">
+                <div class="modal-header">
+                    Notes
+                </div>
+                <div class="accordian" id="attendance-notes-form">
+                    <form name="form" method="POST">
+                        {% for meet in meets %}
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>
+                                        <a class="btn btn-link" data-toggle="collapse" 
+                                            data-target="#meetNotes{{ meet.id }}">
+                                                {{ meet.start|date('m/d') }}
+                                        </a>
+                                    </h5>
+                                </div>
+                                <div id="meetNotes{{ meet.id }}" class="collapse" 
+                                    data-parent="#attendance-notes-form">
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <textarea id="form_meetNotes_{{ meet.id }}" name="form[{{ meet.id }}]" rows="5"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <div class="py-3">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
