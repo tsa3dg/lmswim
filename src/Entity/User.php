@@ -41,7 +41,7 @@ class User implements UserInterface, \Serializable {
 
     /**
      * @ORM\Column(type="array")
-     * @Assert\Choice(choices={"SUPERADMIN_ROLE", "ADMIN_ROLE"})
+     * @Assert\Choice(choices={"SUPERADMIN_ROLE", "ADMIN_ROLE", "PARENT"})
      */
     private $roles;
 

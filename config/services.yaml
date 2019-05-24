@@ -6,12 +6,6 @@ parameters:
     # Code of team using mgmt software
     team_code: 'LM'
 
-    # Location of client executable program
-    client_executable: '../bin/lmclient'
-
-    # Location of staging folder for TM Databases
-    tm_database_path: '../TMData/'
-
     # Meet document folders in public directory
     meet_results_path: 'results/'
     meet_program_path: 'programs/'
@@ -46,5 +40,5 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-    App\Service\ClientHandler:
-        $client_executable: '%client_executable%'
+    App\Service\TeamManagerDBClient:
+        $client_executable: '%team_code%'

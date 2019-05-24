@@ -12,7 +12,6 @@ class Announcement {
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
@@ -24,20 +23,32 @@ class Announcement {
     /**
      * @ORM\Column(type="text", length=1024)
      */
-    private $atext;
+    private $description;
 
     /**
      * @ORM\Column(type="date")
      */
-    private $start;
+    private $postDate;
 
     /**
      * @ORM\Column(type="date", nullable=true)
      */
-    private $exp;
+    private $expirationDate;
+
+    public function __construct($id, $title, $description, $postDate, $expirationDate) {
+        $this->id = $id;
+        $this->title = $title;
+        $this->description = $description;
+        $this->postDate = $postDate;
+        $this->expirationDate = $expirationDate;
+    }
 
     public function getId() {
         return $this->id;
+    }
+
+    public function setId($id) {
+        $this->id = $id;
     }
 
     public function getTitle() {
@@ -48,28 +59,28 @@ class Announcement {
         $this->title = $title;
     }
 
-    public function getAText() {
-        return $this->atext;
+    public function getDescription() {
+        return $this->description;
     }
 
-    public function setAText($atext) {
-        $this->atext = $atext;
+    public function setDescription($description) {
+        $this->description = $description;
     }
 
-    public function getStart() {
-        return $this->start;
+    public function getPostDate() {
+        return $this->postDate;
     }
 
-    public function setStart($start) {
-        $this->start = $start;
+    public function setPostDate($postDate) {
+        $this->postDate = $postDate;
     }
 
-    public function getExp() {
-        return $this->exp;
+    public function getExpirationDate() {
+        return $this->expirationDate;
     }
 
-    public function setExp($exp) {
-        $this->exp = $exp;
+    public function setExpirationDate($expirationDate) {
+        $this->expirationDate = $expirationDate;
     }
 }
 

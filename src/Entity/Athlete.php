@@ -50,7 +50,7 @@ class Athlete {
      * @ORM\Column(type="string")
      */
     private $sex;
-
+    
     /**
      * @ORM\ManyToOne(targetEntity="Team")
      * @ORM\JoinColumn(name="team_id", referencedColumnName="id")

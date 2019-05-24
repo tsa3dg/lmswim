@@ -39,61 +39,6 @@ class ManagerController extends Controller {
         ));
     }
 
-    /**
-     * @Route("/manager/upload", name="manager_upload")
-     */
-    public function managerUpload(Request $request, FileHandler $fileHandler, ClientHandler $clientHandler) {
-
-        $form = $this->createFormBuilder()
-                    ->add('updateAthletes', CheckboxType::class, array(
-                        'required' => false,
-                    ))
-                    ->add('updateRecords', CheckboxType::class, array(
-                        'required' => false,
-                    ))
-                    ->add('managerDatabase', FileType::class)
-                    ->add('submit', SubmitType::class, array(
-                        'attr' => array('class' => 'btn-primary'))
-                    )
-                    ->getForm();
-        
-        $form->handleRequest($request);
-
-        if($form->isSubmitted()) {
-            if($form->isValid()) {
-                $data = $form->getData();
-
-                $tm_database = $data['managerDatabase'];
-
-                $tm_database_path = $this->container->getParameter('tm_database_path');
-
-                $extractPath = $tm_database_path.hash('sha256', time()).'/';
-                $tm_database = $fileHandler->unzipArchive($tm_database->getRealPath(), $extractPath, "MDB");
-                $output = $clientHandler->run($tm_database, $data['updateRecords'], $data['updateAthletes']);
-
-                if($output[2] != "") {
-                    // Handle error
-                }else{
-                    $jsonObjects = json_decode($output[1]);
-
-                    $log = array();
-                    foreach($jsonObjects as $object) {
-                        if($object->Identifier == "Athletes") {
-                            $log["Athletes"] = $this->updateAthletes($object->Objects);
-                        } else if($object->Identifier == "Records") {
-                            //$this->updateRecords($object->Objects);
-                        }  
-                    }
-
-                    return new JsonResponse($log);
-                }
-            }
-        }
-
-        return $this->render('form.html.twig', array(
-            'form' => $form->createView(),
-        ));
-    }
 
     private function updateRecords() {
         // TODO
